@@ -1,212 +1,207 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AWS AI Marketing Platform - Login</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IntelliCart Login</title>
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=EB+Garamond:wght@300;400;500&display=swap" rel="stylesheet">
 
-        .login-container {
-            background: rgba(255,255,255,0.95);
-            backdrop-filter: blur(20px);
-            padding: 50px;
-            border-radius: 24px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
-            width: 100%;
-            max-width: 420px;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+        font-family: 'EB Garamond', serif;
+        background: linear-gradient(135deg, #f8f6f3 0%, #f0ede8 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 25px;
+    }
 
-        .login-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 5px;
-            background: linear-gradient(90deg, #4ecdc4, #44a08d, #667eea, #764ba2, #f9ca24);
-        }
+    /* LOGIN CARD */
+    .login-card {
+        background: rgba(255,255,255,0.92);
+        backdrop-filter: blur(20px);
+        border-radius: 24px;
+        padding: 50px 40px;
+        max-width: 420px;
+        width: 100%;
+        border: 1px solid rgba(212,165,116,0.25);
+        box-shadow: 0 30px 70px rgba(0,0,0,0.12);
+        position: relative;
+    }
+    .login-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5px;
+        background: linear-gradient(90deg, #d4a574, #b89578);
+        border-radius: 24px 24px 0 0;
+    }
 
-        .logo {
-            text-align: center;
-            margin-bottom: 40px;
-        }
+    /* LOGO / TITLE */
+    .login-logo {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    .login-logo h1 {
+        font-family: 'Cinzel', serif;
+        font-size: 34px;
+        font-weight: 700;
+        color: #2d1810;
+        letter-spacing: 1px;
+    }
+    .login-logo p {
+        font-size: 16px;
+        color: #5a4a3a;
+        margin-top: 4px;
+    }
 
-        .logo h1 {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-size: 32px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
+    /* FORM */
+    .form-group {
+        margin-bottom: 22px;
+    }
+    .form-group label {
+        display: block;
+        font-family: 'Cinzel', serif;
+        font-size: 15px;
+        color: #4a4a4a;
+        margin-bottom: 8px;
+    }
+    .form-group input {
+        width: 100%;
+        padding: 14px 18px;
+        font-family: 'EB Garamond', serif;
+        font-size: 15px;
+        border: 2px solid rgba(212,165,116,0.35);
+        border-radius: 14px;
+        background: rgba(255,255,255,0.85);
+        transition: all 0.3s ease;
+    }
+    .form-group input:focus {
+        outline: none;
+        border-color: #d4a574;
+        box-shadow: 0 12px 30px rgba(212,165,116,0.2);
+    }
 
-        .logo p {
-            color: #666;
-            font-size: 16px;
-        }
+    /* BUTTON */
+    .btn-login {
+        width: 100%;
+        padding: 16px;
+        font-family: 'Cinzel', serif;
+        font-size: 15px;
+        letter-spacing: 1px;
+        border: 2px solid #d4a574;
+        background: transparent;
+        color: #1a1a1a;
+        cursor: pointer;
+        border-radius: 16px;
+        transition: all 0.4s ease;
+        position: relative;
+        overflow: hidden;
+        font-weight: 600;
+    }
+    .btn-login::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(212,165,116,0.2), transparent);
+        transition: left 0.6s ease;
+    }
+    .btn-login:hover::before {
+        left: 100%;
+    }
+    .btn-login:hover {
+        background: #d4a574;
+        box-shadow: 0 20px 50px rgba(212,165,116,0.3);
+        transform: translateY(-3px);
+    }
 
-        .form-group {
-            margin-bottom: 24px;
-            position: relative;
-        }
+    /* SIGNUP LINK */
+    .signup-text {
+        text-align: center;
+        margin-top: 22px;
+        font-size: 15px;
+        color: #4a4a4a;
+    }
+    .signup-text button {
+        background: none;
+        border: none;
+        color: #d4a574;
+        font-family: 'Cinzel', serif;
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: 600;
+        text-decoration: underline;
+    }
+    .signup-text button:hover {
+        color: #b89578;
+    }
 
-        .form-group label {
-            display: block;
-            margin-bottom: 10px;
-            color: #444;
-            font-weight: 600;
-            font-size: 15px;
-        }
+    @media (max-width: 480px) {
+        .login-card { padding: 35px 25px; }
+        .login-logo h1 { font-size: 28px; }
+    }
+</style>
 
-        .form-group input {
-            width: 100%;
-            padding: 16px 20px;
-            border: 2px solid #e9ecef;
-            border-radius: 14px;
-            font-size: 16px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            background: rgba(255,255,255,0.9);
-            backdrop-filter: blur(10px);
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: #667eea;
-            background: white;
-            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
-            transform: translateY(-2px);
-        }
-
-        .login-btn {
-            width: 100%;
-            padding: 18px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 16px;
-            font-size: 17px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            margin-top: 8px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .login-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.5s;
-        }
-
-        .login-btn:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
-        }
-
-        .login-btn:hover::before {
-            left: 100%;
-        }
-
-        .signup-link {
-            text-align: center;
-            margin-top: 25px;
-            color: #666;
-        }
-
-        .signup-btn {
-            background: transparent;
-            color: #667eea;
-            border: none;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: underline;
-            padding: 5px;
-        }
-
-        .signup-btn:hover {
-            color: #764ba2;
-        }
-
-        @media (max-width: 480px) {
-            .login-container {
-                padding: 40px 30px;
-                margin: 10px;
-            }
-            .logo h1 { font-size: 28px; }
-        }
-    </style>
 </head>
 <body>
-    <div class="login-container">
-        <div class="logo">
-            <h1>🧠 AWS AI Marketing</h1>
-            <p>Personalized Marketing Platform</p>
+
+<div class="login-card">
+    <!-- LOGO -->
+    <div class="login-logo">
+        <h1>IntelliCart</h1>
+        <p>AI-Powered Marketing & Personalization</p>
+    </div>
+
+    <!-- LOGIN FORM -->
+    <form id="loginForm">
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="email@example.com" required>
         </div>
-
-      <form action="/api/login-submit" method="post">
-    <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" placeholder="Enter an email" required>
-    </div>
-    <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" placeholder="password123" required>
-    </div>
-    <button type="submit" class="login-btn"><a href="/shop">→ Login to Dashboard</a></button>
-</form>
-
-
-        <div class="signup-link">
-            <p>Don't have an account? <button type="button" class="signup-btn" onclick="goToSignup()">Sign up</button></p>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
         </div>
+        <button type="submit" class="btn-login">Login to IntelliCart</button>
+    </form>
+
+    <!-- SIGNUP LINK -->
+    <div class="signup-text">
+        <p>Don’t have an account? <button onclick="goToSignup()">Sign up</button></p>
     </div>
+</div>
 
-    <script>
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const email = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value;
-            
-            if (email && password) {
-                const btn = this.querySelector('.login-btn');
-                btn.innerHTML = '→ Logging in...';
-                btn.disabled = true;
-                
-                setTimeout(() => {
-                    window.location.href = 'home.html';
-                }, 800);
-            }
-        });
+<script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
 
-        function goToSignup() {
-            window.location.href = 'signup.html';
+        if (email && password) {
+            const btn = this.querySelector('.btn-login');
+            btn.textContent = 'Logging in...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                window.location.href = 'shop.html';
+            }, 800);
         }
-    </script>
+    });
+
+    function goToSignup() {
+        window.location.href = 'signup.html';
+    }
+</script>
+
 </body>
 </html>
