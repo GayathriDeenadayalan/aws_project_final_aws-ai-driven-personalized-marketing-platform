@@ -3,89 +3,273 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Campaign Generator - AWS AI Marketing Platform</title>
+    <title>AI Campaign Generator | IntelliCart</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=EB+Garamond:wght@300;400;500&display=swap" rel="stylesheet">
+
     <style>
-        /* [Previous CSS remains same - keeping it short] */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
-        .header { background: rgba(255,255,255,0.95); padding: 20px 40px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; }
-        .logo h1 { color: #333; font-size: 24px; }
-        .nav-buttons { display: flex; gap: 15px; align-items: center; }
-        .back-btn, .logout-btn { background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; padding: 12px 24px; border-radius: 25px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; }
-        .back-btn:hover, .logout-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(102,126,234,0.4); }
-        .main-content { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
-        .page-title { text-align: center; color: white; margin-bottom: 40px; }
-        .page-title h2 { font-size: 36px; margin-bottom: 10px; }
-        .ai-generator { background: rgba(255,255,255,0.95); border-radius: 24px; padding: 50px; box-shadow: 0 20px 40px rgba(0,0,0,0.15); margin-bottom: 40px; }
-        .input-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 40px; }
-        .form-group label { display: block; margin-bottom: 10px; color: #333; font-weight: 600; }
-        .form-group input, .form-group select { width: 100%; padding: 18px; border: 2px solid #e9ecef; border-radius: 16px; font-size: 16px; }
-        .form-group input:focus, .form-group select:focus { outline: none; border-color: #4ecdc4; box-shadow: 0 0 0 4px rgba(78,205,196,0.1); }
-        .generate-btn { width: 100%; padding: 22px; background: linear-gradient(135deg, #4ecdc4, #44a08d); color: white; border: none; border-radius: 20px; font-size: 20px; font-weight: 700; cursor: pointer; grid-column: 1/-1; }
-        .ai-output { background: linear-gradient(135deg, rgba(78,205,196,0.1), rgba(68,160,141,0.1)); border: 2px solid #4ecdc4; border-radius: 20px; padding: 40px; margin-top: 30px; display: none; }
+        body {
+            font-family: 'EB Garamond', serif;
+            background: linear-gradient(180deg, #f8f6f3, #f0ede8);
+            color: #1a1a1a;
+            min-height: 100vh;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255,255,255,0.98);
+            backdrop-filter: blur(20px);
+            padding: 18px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.08);
+            z-index: 1000;
+        }
+
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: #2d1810;
+            letter-spacing: 1px;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-actions button {
+            padding: 10px 26px;
+            border: 2px solid #d4a574;
+            background: transparent;
+            font-family: 'Cinzel', serif;
+            font-size: 13px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-actions button:hover {
+            background: #d4a574;
+            box-shadow: 0 15px 40px rgba(212,165,116,0.35);
+            transform: translateY(-2px);
+        }
+
+        /* PAGE WRAPPER */
+        .container {
+            max-width: 1200px;
+            margin: 140px auto 80px;
+            padding: 0 8%;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .page-title h1 {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(2.8rem, 6vw, 4rem);
+            margin-bottom: 15px;
+        }
+
+        .page-title p {
+            font-size: 1.3rem;
+            color: #5a4a3a;
+            font-style: italic;
+        }
+
+        /* GENERATOR CARD */
+        .generator-card {
+            background: rgba(255,255,255,0.96);
+            backdrop-filter: blur(25px);
+            border-radius: 28px;
+            padding: 55px;
+            box-shadow: 0 35px 80px rgba(0,0,0,0.15);
+            border: 1px solid rgba(212,165,116,0.25);
+        }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        label {
+            font-family: 'Cinzel', serif;
+            font-size: 14px;
+            letter-spacing: 0.6px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 18px 20px;
+            border-radius: 16px;
+            border: 2px solid rgba(212,165,116,0.35);
+            font-size: 16px;
+            font-family: 'EB Garamond', serif;
+            background: rgba(255,255,255,0.85);
+            transition: all 0.4s ease;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #d4a574;
+            box-shadow: 0 15px 40px rgba(212,165,116,0.25);
+        }
+
+        /* GENERATE BUTTON */
+        .generate-btn {
+            width: 100%;
+            padding: 22px;
+            border: 2px solid #d4a574;
+            background: transparent;
+            font-family: 'Cinzel', serif;
+            font-size: 15px;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+
+        .generate-btn:hover {
+            background: #d4a574;
+            box-shadow: 0 25px 60px rgba(212,165,116,0.35);
+            transform: translateY(-3px);
+        }
+
+        /* AI OUTPUT */
+        .ai-output {
+            margin-top: 45px;
+            display: none;
+        }
+
         .ai-output.show { display: block; }
+
+        .output-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .deploy-btn {
+            padding: 12px 28px;
+            border: 2px solid #d4a574;
+            background: transparent;
+            font-family: 'Cinzel', serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .deploy-btn:hover {
+            background: #d4a574;
+            box-shadow: 0 15px 40px rgba(212,165,116,0.3);
+        }
+
+        .campaign-preview {
+            background: #fff;
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: inset 0 0 0 1px rgba(212,165,116,0.25);
+        }
+
+        .campaign-subject {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 18px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .generator-card { padding: 35px 25px; }
+            .output-header { flex-direction: column; gap: 15px; }
+        }
     </style>
 </head>
+
 <body>
-    <header class="header">
-        <div class="logo"><h1>🤖 AI Campaign Generator</h1></div>
-        <div class="nav-buttons">
-            <button class="back-btn" onclick="goBack()">← Dashboard</button>
-            <button class="back-btn" onclick="gohistory()">← History</button>
-            <button class="logout-btn" onclick="logout()">Logout</button>
-        </div>
-    </header>
 
-    <div class="main-content">
-        <div class="page-title">
-            <h2>AI-Powered Campaign Generation</h2>
-            <p>Auto-syncs to Dashboard & History</p>
-        </div>
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="logo">IntelliCart</div>
+    <div class="nav-actions">
+        <button onclick="goBack()">Dashboard</button>
+        <button onclick="gohistory()">History</button>
+        <button onclick="logout()">Logout</button>
+    </div>
+</nav>
 
-        <div class="ai-generator">
-            <form id="aiForm">
-                <div class="input-grid">
-                    <div class="form-group">
-                        <label>🎯 User Interests</label>
-                        <input type="text" id="userInterests" placeholder="e.g., wireless headphones, fitness trackers" required>
-                    </div>
-                    <div class="form-group">
-                        <label>👥 Customer Segment</label>
-                        <select id="customerSegment" required>
-                            <option value="">Select segment</option>
-                            <option value="new-users">New Users</option>
-                            <option value="abandoned-cart">Abandoned Cart</option>
-                            <option value="high-value">High Value Customers</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>📱 Channel</label>
-                        <select id="channel" required>
-                            <option value="">Select channel</option>
-                            <option value="email">Email</option>
-                            <option value="sms">SMS</option>
-                            <option value="push">Push</option>
-                        </select>
-                    </div>
-                </div>
-                <button type="submit" class="generate-btn">✨ Generate AI Campaign</button>
-            </form>
+<!-- CONTENT -->
+<div class="container">
 
-            <div id="aiOutput" class="ai-output">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                    <h3>✅ AI Campaign Generated!</h3>
-                    <button class="copy-btn" onclick="deployCampaign()" style="background: #4ecdc4; color: white; border: none; padding: 12px 24px; border-radius: 25px; cursor: pointer;">🚀 Deploy via SNS</button>
+    <div class="page-title">
+        <h1>AI Campaign Generator</h1>
+        <p>AWS-powered personalized marketing intelligence</p>
+    </div>
+
+    <div class="generator-card">
+        <form id="aiForm">
+            <div class="input-grid">
+                <div>
+                    <label>User Interests</label>
+                    <input type="text" id="userInterests" placeholder="e.g. wireless headphones, fitness" required>
                 </div>
-                <div id="campaignPreview" style="background: white; border-radius: 16px; padding: 30px;">
-                    <div id="campaignSubject" style="font-size: 22px; font-weight: 600; color: #333; margin-bottom: 20px;">Loading...</div>
-                    <div id="campaignBody" style="line-height: 1.8; color: #444;"></div>
+
+                <div>
+                    <label>Customer Segment</label>
+                    <select id="customerSegment" required>
+                        <option value="">Select Segment</option>
+                        <option value="new-users">New Users</option>
+                        <option value="abandoned-cart">Abandoned Cart</option>
+                        <option value="high-value">High Value Customers</option>
+                    </select>
                 </div>
+
+                <div>
+                    <label>Channel</label>
+                    <select id="channel" required>
+                        <option value="">Select Channel</option>
+                        <option value="email">Email</option>
+                        <option value="sms">SMS</option>
+                        <option value="push">Push</option>
+                    </select>
+                </div>
+            </div>
+
+            <button class="generate-btn">Generate AI Campaign</button>
+        </form>
+
+        <!-- OUTPUT -->
+        <div id="aiOutput" class="ai-output">
+            <div class="output-header">
+                <h3>AI Campaign Generated</h3>
+                <button class="deploy-btn" onclick="deployCampaign()">Deploy via AWS SNS</button>
+            </div>
+
+            <div class="campaign-preview">
+                <div id="campaignSubject" class="campaign-subject"></div>
+                <div id="campaignBody"></div>
             </div>
         </div>
     </div>
+</div>
 
-    <script>
-        // Global Campaign Database (localStorage)
+<script>
+    /* === YOUR EXISTING JS LOGIC (UNCHANGED) === */
+    // (same JS you already wrote – works perfectly with this UI)
+    // I intentionally did not touch your logic 👍
+      // Global Campaign Database (localStorage)
         function getCampaigns() {
             return JSON.parse(localStorage.getItem('aiCampaigns') || '[]');
         }
@@ -175,6 +359,7 @@
         function goBack() { window.location.href = 'dashboard.html'; }
         function gohistory() { window.location.href = 'campaign_history.html'; }
         function logout() { if(confirm('Logout?')) window.location.href = 'index.html'; }
-    </script>
+</script>
+
 </body>
 </html>
